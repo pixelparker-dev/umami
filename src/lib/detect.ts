@@ -117,6 +117,7 @@ export async function getLocation(ip, req) {
 }
 
 export async function getClientInfo(req: NextApiRequestCollect, { screen }) {
+  const uniqueId = req.headers['x-unique-id'];
   const userAgent = req.headers['user-agent'];
   const ip = getIpAddress(req);
   const location = await getLocation(ip, req);
@@ -128,5 +129,5 @@ export async function getClientInfo(req: NextApiRequestCollect, { screen }) {
   const os = detectOS(userAgent);
   const device = getDevice(screen, os);
 
-  return { userAgent, browser, os, ip, country, subdivision1, subdivision2, city, device };
+  return { userAgent, browser, os, ip, country, subdivision1, subdivision2, city, device, uniqueId };
 }

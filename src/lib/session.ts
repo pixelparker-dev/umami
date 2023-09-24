@@ -21,6 +21,7 @@ export async function findSession(req: NextApiRequestCollect): Promise<{
   subdivision2: any;
   city: any;
   ownerId: string;
+  uniqueId: string;
 }> {
   const { payload } = req.body;
 
@@ -63,7 +64,7 @@ export async function findSession(req: NextApiRequestCollect): Promise<{
 
   await checkUserBlock(website.userId);
 
-  const { userAgent, browser, os, ip, country, subdivision1, subdivision2, city, device } =
+  const { userAgent, browser, os, ip, country, subdivision1, subdivision2, city, device, uniqueId} =
     await getClientInfo(req, payload);
 
   const sessionId = uuid(websiteId, hostname, ip, userAgent);
@@ -84,6 +85,7 @@ export async function findSession(req: NextApiRequestCollect): Promise<{
       subdivision2,
       city,
       ownerId: website.userId,
+      uniqueId,
     };
   }
 
@@ -106,6 +108,7 @@ export async function findSession(req: NextApiRequestCollect): Promise<{
         subdivision1,
         subdivision2,
         city,
+        uniqueId,
       });
     } catch (e: any) {
       if (!e.message.toLowerCase().includes('unique constraint')) {

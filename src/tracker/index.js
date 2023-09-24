@@ -177,6 +177,7 @@
     if (trackingDisabled()) return;
     const headers = {
       'Content-Type': 'application/json',
+      'X-Unique-ID': localStorage.getItem('token-sub') ?? '-',
     };
     if (typeof cache !== 'undefined') {
       headers['x-umami-cache'] = cache;
